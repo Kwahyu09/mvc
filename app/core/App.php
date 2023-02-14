@@ -4,12 +4,16 @@ class App{
     protected $controller = 'home';
     protected $method = 'index';
     protected $params = [];
+    protected $url = true;
 
     public function __construct()
     {   
-        $url = $this->parseUrl();
         //membuat controller
         // mengecek file yang ada di folder controller
+        $url = $this->parseUrl();
+        if($url === null){
+            $url[] = 'index';
+        }
         if( file_exists('../app/controllers/' . $url[0] . '.php') ){
             $this->controller = $url[0];
             //menghilangkan url dari elemen array
@@ -34,21 +38,20 @@ class App{
             //mengambil nilai yang ada diurl selain controler dan method 
             $this->params = array_values($url);
         }
-
         //jalankan controller & method, kirimkan params jika ada
-        call_user_func_array([$this->controller, $this->method], $this->params );
+        call_user_func_array([$this->controller, $this->method], $this->params ); 
     } 
 
     public function parseUrl(){
         if( isset($_GET['url'])){
             //rtrim untuk menghilangkan / diakhir url
-            $url = rtrim($_GET['url'], '/home');
+            $url = rtrim($_GET['url'], '/');
 
             //membersihkan url dari karakter basing
             $url = filter_var($url, FILTER_SANITIZE_URL);
 
             //URL dipecah berdasarkan tanda /
-            $url = explode('/home', $url);
+            $url = explode('/', $url);
             return $url;
         }
     }
