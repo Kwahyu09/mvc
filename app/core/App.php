@@ -11,7 +11,9 @@ class App{
         //membuat controller
         // mengecek file yang ada di folder controller
         $url = $this->parseUrl();
-        if($url === null){
+
+        //jika url kosong
+        if(is_null($url)){
             $url[] = 'index';
         }
         if( file_exists('../app/controllers/' . $url[0] . '.php') ){
