@@ -6,14 +6,11 @@ class App{
     protected $params = [];
 
     public function __construct()
-    {
+    {   
         $url = $this->parseUrl();
-
-
         //membuat controller
         // mengecek file yang ada di folder controller
-        if( file_exists('../app/controllers/' . $url[0] . '.php') )
-        {
+        if( file_exists('../app/controllers/' . $url[0] . '.php') ){
             $this->controller = $url[0];
             //menghilangkan url dari elemen array
             unset($url[0]);
@@ -45,13 +42,13 @@ class App{
     public function parseUrl(){
         if( isset($_GET['url'])){
             //rtrim untuk menghilangkan / diakhir url
-            $url = rtrim($_GET['url'], '/');
+            $url = rtrim($_GET['url'], '/home');
 
             //membersihkan url dari karakter basing
             $url = filter_var($url, FILTER_SANITIZE_URL);
 
             //URL dipecah berdasarkan tanda /
-            $url = explode('/', $url);
+            $url = explode('/home', $url);
             return $url;
         }
     }
