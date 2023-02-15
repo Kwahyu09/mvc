@@ -28,4 +28,16 @@ class Mahasiswa extends Controller{
             exit;
         }
     }
+
+    public function hapus($id){
+        if($this->model('Mahasiswa_model')->hapusMahasiswa($id) > 0 ){
+            Flasher::SetFlash('Berhasil', 'dihapus', 'success');
+            header('Location: ' . BASEURL . '/mahasiswa');
+            exit;
+        }else{
+            Flasher::SetFlash('Gagal', 'dihapus', 'danger');
+            header('Location: ' . BASEURL . '/mahasiswa');
+            exit;
+        }
+    }
 }
